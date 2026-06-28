@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1200">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#243c5b" />
+      <stop offset="100%" stop-color="#183143" />
+    </linearGradient>
+  </defs>
+  <rect width="2000" height="1200" fill="url(#sky)" />
+  <g opacity="0.92">
+    <ellipse cx="1000" cy="900" rx="1000" ry="260" fill="#1f2b39" />
+    <path d="M 180 420 C 320 320 480 340 640 260 S 1080 180 1260 240" stroke="#6fae8e" stroke-width="40" fill="none" />
+    <path d="M 250 900 C 420 780 620 820 780 720 S 1220 620 1440 680" stroke="#a38c5d" stroke-width="44" fill="none" />
+    <path d="M 1080 540 C 1240 440 1380 500 1520 420" stroke="#d7b36a" stroke-width="36" fill="none" />
+  </g>
+  <text x="1100" y="150" fill="#eef4ff" font-size="90" font-family="serif" opacity="0.8">Deanteria</text>
+  <circle cx="860" cy="320" r="18" fill="#ff7c7c" opacity="0.9" />
+  <circle cx="1460" cy="790" r="16" fill="#74c7ff" opacity="0.9" />
+  <circle cx="420" cy="960" r="16" fill="#8ef4ae" opacity="0.9" />
+</svg>
