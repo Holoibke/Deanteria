@@ -1,6 +1,6 @@
 // ── Config ────────────────────────────────────────────────────────────────────
 const MAP_CONFIG = {
-  imageUrl:   'js/map.jpg',          // ← change to your map filename
+  imageUrl:   'map.jpg',          // ← change to your map filename
   imageWidth:  12088,
   imageHeight: 7932,
   minZoom:    -4,
