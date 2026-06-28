@@ -1,55 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deanteria Fantasy Map</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantasy Map</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="page-shell">
-    <header>
-      <div class="site-title">
-        <h1>Deanteria Interactive Map</h1>
-        <p>Drag to pan, wheel to zoom, hover markers for names.</p>
-      </div>
-      <div class="controls">
-        <div class="zoom-controls" aria-label="Map controls">
-          <button id="zoom-out" type="button" aria-label="Zoom out">-</button>
-          <span id="zoom-level">100%</span>
-          <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
-          <button id="reset" type="button" aria-label="Reset view">Reset</button>
-        </div>
-        <div class="legend" aria-label="Map legend">
-          <strong>Legend</strong>
-          <div class="legend-row">
-            <span class="legend-badge legend-red"></span>
-            <span>Capital / Stronghold</span>
-          </div>
-          <div class="legend-row">
-            <span class="legend-badge legend-blue"></span>
-            <span>Port / City</span>
-          </div>
-          <div class="legend-row">
-            <span class="legend-badge legend-green"></span>
-            <span>Mystical site / Ruins</span>
-          </div>
-        </div>
-      </div>
-    </header>
 
-    <main>
-      <div id="map-container">
-        <div id="map-stage">
-          <div id="map-layer">
-            <img id="map-img" src="assets/map.svg" alt="Fantasy map of Deanteria" draggable="false" />
-            <div id="overlay" aria-hidden="true"></div>
-          </div>
-        </div>
-      </div>
-    </main>
+  <!-- ── Map ──────────────────────────────────────────── -->
+  <div id="map"></div>
+
+  <!-- ── Floating toolbar ─────────────────────────────── -->
+  <div id="toolbar">
+    <button id="edit-mode-btn">✏ Edit Mode</button>
+    <button id="toggle-sidebar-btn">▶ Hide</button>
   </div>
 
-  <script src="script.js"></script>
+  <!-- ── Coords display ───────────────────────────────── -->
+  <div id="coords-display">x — y —</div>
+
+  <!-- ── Toast ────────────────────────────────────────── -->
+  <div id="toast"></div>
+
+  <!-- ── Sidebar ──────────────────────────────────────── -->
+  <aside id="sidebar">
+
+    <div id="sidebar-header">
+      <h2>Map Editor</h2>
+      <span class="mode-badge view-mode">View</span>
+    </div>
+
+    <!-- Tab strip -->
+    <div id="tabs">
+      <button class="tab-btn active" data-tab="markers">Markers</button>
+      <button class="tab-btn" data-tab="labels">Labels</button>
+      <button class="tab-btn" data-tab="data">Data</button>
+    </div>
+
+    <!-- Tab panels -->
+    <div id="tab-content">
+
+      <!-- Markers panel -->
+      <div class="tab-panel active" data-panel="markers">
+        <button class="btn full" data-place="marker" style="margin-bottom:10px;">
+          + Place Marker
+        </button>
+        <div id="marker-list" class="item-list"></div>
+      </div>
+
+      <!-- Labels panel -->
+      <div class="tab-panel" data-panel="labels">
+        <button class="btn full" data-place="label" style="margin-bottom:10px;">
+          + Place Label
+        </button>
+        <div id="label-list" class="item-list"></div>
+      </div>
+
+      <!-- Data panel -->
+      <div class="tab-panel" data-panel="data">
+        <div class="data-section">
+          <h3>Overview</h3>
+          <div class="data-stats">
+            <div class="stat-row"><span>Markers</span><span id="stat-markers">0</span></div>
+            <div class="stat-row"><span>Area labels</span><span id="stat-labels">0</span></div>
+          </div>
+        </div>
+
+        <div class="data-section">
+          <h3>Export</h3>
+          <p style="font-size:12px; color:var(--ink-dim); margin-bottom:10px; line-height:1.5;">
+            Download your map data as <code>mapdata.json</code> and place it in the <code>data/</code> folder of your repo to save changes permanently.
+          </p>
+          <button class="btn full primary" id="btn-export">⬇ Download mapdata.json</button>
+        </div>
+
+        <div class="data-section">
+          <h3>Import</h3>
+          <p style="font-size:12px; color:var(--ink-dim); margin-bottom:10px; line-height:1.5;">
+            Load a previously exported <code>mapdata.json</code> to restore markers and labels.
+          </p>
+          <button class="btn full" id="btn-import">⬆ Load mapdata.json</button>
+        </div>
+
+        <div>
+          <h3 style="font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-dim); margin-bottom:8px;">Tile Migration</h3>
+          <p style="font-size:12px; color:var(--ink-dim); line-height:1.5;">
+            When ready to switch to tiles, run <code>gdal2tiles.py -z 0-4 map.jpg tiles/</code> and update <code>MAP_CONFIG.imageUrl</code> to a tile layer URL in <code>js/map.js</code>.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /tab-content -->
+
+    <!-- Edit form (shown when an item is selected) -->
+    <div id="edit-form-wrap" style="display:none;">
+      <div id="edit-form-title"></div>
+      <div id="edit-form-fields"></div>
+      <div class="btn-row" id="edit-form-btns"></div>
+    </div>
+
+  </aside><!-- /sidebar -->
+
+  <script src="js/map.js"></script>
+  <script src="js/editor.js"></script>
 </body>
 </html>

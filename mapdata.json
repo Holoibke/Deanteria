@@ -1,0 +1,8 @@
+{
+  "_schema": {
+    "markers": "{ id, name, lat, lng, icon, minZoom, maxZoom, description }",
+    "labels":  "{ id, name, lat, lng, minZoom, maxZoom, fontSize }"
+  },
+  "markers": [],
+  "labels": []
+}
