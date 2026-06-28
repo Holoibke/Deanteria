@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map Editor</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/editor.css" />
+</head>
+<body>
+
+  <!-- Password gate (shown until authenticated) -->
+  <div id="gate">
+    <div id="gate-box">
+      <h1>Map Editor</h1>
+      <p>Enter the editor password to continue.</p>
+      <input id="gate-input" type="password" placeholder="Password" autocomplete="current-password" />
+      <button id="gate-btn">Enter</button>
+      <p id="gate-error"></p>
+    </div>
+  </div>
+
+  <!-- Editor UI (hidden until authenticated) -->
+  <div id="app" class="hidden">
+
+    <aside id="sidebar">
+      <header id="sidebar-header">
+        <h2 id="sidebar-title">Map Editor</h2>
+        <div id="sidebar-tabs">
+          <button class="tab active" data-tab="markers">Markers</button>
+          <button class="tab"        data-tab="labels">Labels</button>
+          <button class="tab"        data-tab="settings">Settings</button>
+        </div>
+      </header>
+
+      <!-- ── Markers tab ──────────────────────────────── -->
+      <section id="tab-markers" class="tab-content active">
+        <div id="markers-list"></div>
+        <button id="add-marker-btn" class="btn-add">+ Add marker</button>
+      </section>
+
+      <!-- ── Labels tab ───────────────────────────────── -->
+      <section id="tab-labels" class="tab-content">
+        <div id="labels-list"></div>
+        <button id="add-label-btn" class="btn-add">+ Add label</button>
+      </section>
+
+      <!-- ── Settings tab ─────────────────────────────── -->
+      <section id="tab-settings" class="tab-content">
+        <div class="field-group">
+          <label>GitHub Owner <span class="hint">(your username or org)</span></label>
+          <input id="cfg-owner" type="text" placeholder="e.g. your-username" />
+        </div>
+        <div class="field-group">
+          <label>Repository</label>
+          <input id="cfg-repo" type="text" placeholder="e.g. my-fantasy-map" />
+        </div>
+        <div class="field-group">
+          <label>Branch</label>
+          <input id="cfg-branch" type="text" placeholder="main" value="main" />
+        </div>
+        <div class="field-group">
+          <label>Personal Access Token <span class="hint">(repo write scope)</span></label>
+          <input id="cfg-token" type="password" placeholder="ghp_…" autocomplete="off" />
+        </div>
+        <button id="save-settings-btn" class="btn-primary">Save settings</button>
+        <p id="settings-status"></p>
+      </section>
+
+      <!-- ── Footer ───────────────────────────────────── -->
+      <footer id="sidebar-footer">
+        <p id="place-hint" class="hidden">Click on the map to place.</p>
+        <button id="commit-btn" class="btn-primary">💾 Save to GitHub</button>
+        <p id="commit-status"></p>
+      </footer>
+    </aside>
+
+    <!-- Map canvas -->
+    <div id="map"></div>
+
+    <!-- Floating marker/label edit panel -->
+    <div id="edit-panel" class="hidden">
+      <div id="edit-panel-inner">
+        <h3 id="edit-panel-title">Edit marker</h3>
+        <div id="edit-fields"></div>
+        <div id="edit-panel-actions">
+          <button id="edit-save-btn"   class="btn-primary">Apply</button>
+          <button id="edit-delete-btn" class="btn-danger">Delete</button>
+          <button id="edit-cancel-btn" class="btn-ghost">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#app -->
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/viewer.js"></script>
+  <script src="js/editor.js"></script>
+</body>
+</html>
