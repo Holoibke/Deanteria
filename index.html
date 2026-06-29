@@ -13,22 +13,22 @@
 </head>
 <body>
 
-  <!-- ── Map ──────────────────────────────────────────── -->
+<!-- mapa -->
   <div id="map"></div>
 
-  <!-- ── Floating toolbar ─────────────────────────────── -->
+<!-- pasek zadań -->
   <div id="toolbar">
     <button id="edit-mode-btn">✏ Edit Mode</button>
     <button id="toggle-sidebar-btn">▶ Hide</button>
   </div>
 
-  <!-- ── Coords display ───────────────────────────────── -->
+<!-- koordy -->
   <div id="coords-display">x — y —</div>
 
-  <!-- ── Toast ────────────────────────────────────────── -->
+<!-- powiadomienia -->
   <div id="toast"></div>
 
-  <!-- ── Sidebar ──────────────────────────────────────── -->
+<!-- pasek boczny -->
   <aside id="sidebar">
 
     <div id="sidebar-header">
@@ -36,17 +36,17 @@
       <span class="mode-badge view-mode">View</span>
     </div>
 
-    <!-- Tab strip -->
+<!-- karty -->
     <div id="tabs">
       <button class="tab-btn active" data-tab="markers">Markers</button>
       <button class="tab-btn" data-tab="labels">Labels</button>
       <button class="tab-btn" data-tab="data">Data</button>
     </div>
 
-    <!-- Tab panels -->
+<!-- panele -->
     <div id="tab-content">
 
-      <!-- Markers panel -->
+<!-- markery -->
       <div class="tab-panel active" data-panel="markers">
         <button class="btn full" data-place="marker" style="margin-bottom:10px;">
           + Place Marker
@@ -54,7 +54,7 @@
         <div id="marker-list" class="item-list"></div>
       </div>
 
-      <!-- Labels panel -->
+<!-- nazwy -->
       <div class="tab-panel" data-panel="labels">
         <button class="btn full" data-place="label" style="margin-bottom:10px;">
           + Place Label
@@ -62,7 +62,7 @@
         <div id="label-list" class="item-list"></div>
       </div>
 
-      <!-- Data panel -->
+<!-- dane -->
       <div class="tab-panel" data-panel="data">
         <div class="data-section">
           <h3>Overview</h3>
@@ -96,16 +96,16 @@
         </div>
       </div>
 
-    </div><!-- /tab-content -->
+    </div>
 
-    <!-- Edit form (shown when an item is selected) -->
+<!-- edycja -->
     <div id="edit-form-wrap" style="display:none;">
       <div id="edit-form-title"></div>
       <div id="edit-form-fields"></div>
       <div class="btn-row" id="edit-form-btns"></div>
     </div>
 
-  </aside><!-- /sidebar -->
+  </aside> <!-- koniec-->
 
   <script src="js/map.js"></script>
   <script src="js/editor.js"></script>

@@ -1,4 +1,4 @@
-/* ── Tokens ─────────────────────────────────────────────── */
+
 :root {
   --bg:           #1a1714;
   --surface:      #22201c;
@@ -20,7 +20,7 @@
   --trans:        0.18s ease;
 }
 
-/* ── Reset ──────────────────────────────────────────────── */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -32,7 +32,6 @@ body {
   overflow: hidden;
 }
 
-/* ── Map container ──────────────────────────────────────── */
 #map {
   flex: 1;
   height: 100dvh;
@@ -40,7 +39,7 @@ body {
   z-index: 0;
 }
 
-/* Leaflet overrides */
+
 .leaflet-container { background: #111 !important; }
 .leaflet-control-zoom a {
   background: var(--surface) !important;
@@ -52,7 +51,6 @@ body {
   color: var(--accent) !important;
 }
 
-/* ── Tooltips (marker hover) ────────────────────────────── */
 .leaflet-tooltip.marker-tooltip {
   background: var(--surface);
   border: 1px solid var(--border-light);
@@ -69,7 +67,6 @@ body {
   border-top-color: var(--border-light) !important;
 }
 
-/* ── Area labels ────────────────────────────────────────── */
 .area-label {
   background: transparent !important;
   border: none !important;
@@ -88,7 +85,6 @@ body {
 }
 .area-label::before { display: none !important; }
 
-/* ── Sidebar ────────────────────────────────────────────── */
 #sidebar {
   width: var(--sidebar-w);
   height: 100dvh;
@@ -107,7 +103,6 @@ body {
   right: 0;
 }
 
-/* Sidebar header */
 #sidebar-header {
   padding: 14px 16px 12px;
   border-bottom: 1px solid var(--border);
@@ -138,7 +133,6 @@ body {
   color: var(--ink-dim);
 }
 
-/* Tab strip */
 #tabs {
   display: flex;
   border-bottom: 1px solid var(--border);
@@ -162,7 +156,6 @@ body {
   border-bottom-color: var(--accent);
 }
 
-/* Tab panels */
 #tab-content {
   flex: 1;
   overflow-y: auto;
@@ -172,7 +165,6 @@ body {
 .tab-panel { display: none; padding: 14px 14px 0; }
 .tab-panel.active { display: block; }
 
-/* ── Form elements ──────────────────────────────────────── */
 .field { margin-bottom: 12px; }
 .field label {
   display: block;
@@ -210,7 +202,6 @@ body {
   gap: 8px;
 }
 
-/* ── Buttons ────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -249,7 +240,6 @@ body {
 .btn.sm { padding: 4px 9px; font-size: 11px; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* ── Item list (markers / labels list) ─────────────────── */
 .item-list { margin-top: 10px; }
 .item-entry {
   display: flex;
@@ -296,7 +286,6 @@ body {
   line-height: 1.6;
 }
 
-/* ── Edit form panel ────────────────────────────────────── */
 #edit-form-wrap {
   border-top: 1px solid var(--border);
   padding: 14px;
@@ -315,7 +304,6 @@ body {
   margin-top: 4px;
 }
 
-/* ── Data tab (import/export) ───────────────────────────── */
 .data-section {
   padding-bottom: 14px;
   margin-bottom: 14px;
@@ -344,7 +332,6 @@ body {
 }
 .stat-row span:last-child { color: var(--ink); font-variant-numeric: tabular-nums; }
 
-/* ── Toggle / floating controls ─────────────────────────── */
 #toolbar {
   position: absolute;
   top: 14px;
@@ -387,10 +374,8 @@ body {
   color: var(--accent);
 }
 
-/* cursor hint when editing */
 body.edit-mode #map { cursor: crosshair; }
 
-/* ── Coords display ─────────────────────────────────────── */
 #coords-display {
   position: absolute;
   bottom: 8px;
@@ -406,7 +391,6 @@ body.edit-mode #map { cursor: crosshair; }
   pointer-events: none;
 }
 
-/* ── Notification toast ─────────────────────────────────── */
 #toast {
   position: absolute;
   bottom: 36px;
@@ -428,7 +412,6 @@ body.edit-mode #map { cursor: crosshair; }
   transform: translateX(-50%) translateY(0);
 }
 
-/* ── Scrollbar ──────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }

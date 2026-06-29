@@ -1,14 +1,13 @@
-// ── Config ────────────────────────────────────────────────────────────────────
+// config
 const MAP_CONFIG = {
-  imageUrl:   'map.jpg',          // ← change to your map filename
+  imageUrl:   'map.png',     
   imageWidth:  12088,
   imageHeight: 7932,
   minZoom:    -4,
   maxZoom:     3,
   startZoom:  -2,
 
-  // Icon definitions — add entries here as you add files to /icons/
-  // { id, label, file }  (file relative to icons/)
+//ikony id
   icons: [
     { id: 'default',  label: 'Default Pin',  file: 'default.png'  },
     { id: 'city',     label: 'City',         file: 'city.png'     },
@@ -18,18 +17,17 @@ const MAP_CONFIG = {
   iconSize: [28, 28],   // px — fixed regardless of zoom
 };
 
-// ── State ─────────────────────────────────────────────────────────────────────
+// stan
 window.mapState = {
-  markers: [],   // { id, name, lat, lng, icon, minZoom, maxZoom, description }
-  labels:  [],   // { id, name, lat, lng, minZoom, maxZoom, fontSize }
+  markers: [],  
+  labels:  [],  
 };
 
-// ── Leaflet instances ─────────────────────────────────────────────────────────
+// nwm co to jest wgl
 let map;
-const markerLayers = {};  // id → L.Marker
-const labelLayers  = {};  // id → L.Tooltip (permanent)
-
-// ── Init ─────────────────────────────────────────────────────────────────────
+const markerLayers = {};  
+const labelLayers  = {};  
+// inicjalizacja
 function initMap() {
   const bounds = [
     [0, 0],
@@ -47,16 +45,16 @@ function initMap() {
     attributionControl: false,
   });
 
-  // Fit whole map on screen initially
+
   map.fitBounds(bounds);
 
-  // Image overlay
+//overlay
   L.imageOverlay(MAP_CONFIG.imageUrl, bounds).addTo(map);
 
-  // Zoom change → update visibility
+//zoom update
   map.on('zoomend', updateVisibility);
 
-  // Mouse move → coords display
+// jak sie rusza to wyświetla koordy
   map.on('mousemove', (e) => {
     const el = document.getElementById('coords-display');
     if (el) {
@@ -66,7 +64,7 @@ function initMap() {
     }
   });
 
-  // Click → editor placement hook (handled in editor.js)
+//klikanie w edytorze
   map.on('click', (e) => {
     if (window.editorHandleMapClick) {
       window.editorHandleMapClick(e.latlng);
@@ -74,7 +72,7 @@ function initMap() {
   });
 }
 
-// ── Icon helpers ──────────────────────────────────────────────────────────────
+//pomocnik do ikon
 function getLeafletIcon(iconId) {
   const def = MAP_CONFIG.icons.find(i => i.id === iconId) || MAP_CONFIG.icons[0];
   return L.icon({
@@ -85,7 +83,7 @@ function getLeafletIcon(iconId) {
   });
 }
 
-// ── Markers ───────────────────────────────────────────────────────────────────
+// markery
 function addMarkerToMap(markerData) {
   const m = L.marker([markerData.lat, markerData.lng], {
     icon: getLeafletIcon(markerData.icon),
@@ -122,9 +120,9 @@ function updateMarkerOnMap(markerData) {
   addMarkerToMap(markerData);
 }
 
-// ── Labels ────────────────────────────────────────────────────────────────────
+// nazwy
 function addLabelToMap(labelData) {
-  // Permanent tooltip attached to an invisible marker
+  // wieczny tooltip
   const anchor = L.marker([labelData.lat, labelData.lng], {
     opacity: 0,
     interactive: false,
@@ -138,7 +136,7 @@ function addLabelToMap(labelData) {
     offset:     [0, 0],
   });
 
-  // Apply font size
+  // font
   anchor.on('add', () => {
     const el = anchor.getTooltip()?.getElement();
     if (el) el.style.fontSize = (labelData.fontSize || 18) + 'px';
@@ -146,7 +144,6 @@ function addLabelToMap(labelData) {
 
   anchor.addTo(map);
 
-  // Also update font size immediately if tooltip already exists
   const el = anchor.getTooltip()?.getElement();
   if (el) el.style.fontSize = (labelData.fontSize || 18) + 'px';
 
@@ -166,7 +163,7 @@ function updateLabelOnMap(labelData) {
   addLabelToMap(labelData);
 }
 
-// ── Zoom visibility ───────────────────────────────────────────────────────────
+// widoczność zooma
 function applyVisibility(id, type) {
   const z = map.getZoom();
   const data = type === 'marker'
@@ -185,7 +182,7 @@ function applyVisibility(id, type) {
   const el = layer.getElement?.();
   if (el) el.style.display = visible ? '' : 'none';
 
-  // Also hide/show the tooltip for labels
+  // pokaż/ukryj tooltip
   if (type === 'label') {
     const tip = layer.getTooltip()?.getElement();
     if (tip) tip.style.display = visible ? '' : 'none';
@@ -197,7 +194,7 @@ function updateVisibility() {
   window.mapState.labels.forEach(l => applyVisibility(l.id, 'label'));
 }
 
-// ── Load from JSON ────────────────────────────────────────────────────────────
+// ładowanie z json
 async function loadMapData() {
   try {
     const res = await fetch('data/mapdata.json');
@@ -213,7 +210,7 @@ async function loadMapData() {
   }
 }
 
-// ── Public API ────────────────────────────────────────────────────────────────
+// API
 window.mapAPI = {
   config: MAP_CONFIG,
   map: () => map,
@@ -264,7 +261,6 @@ window.mapAPI = {
 
   importJSON(json) {
     const data = JSON.parse(json);
-    // Clear existing
     window.mapState.markers.forEach(m => removeMarkerFromMap(m.id));
     window.mapState.labels.forEach(l => removeLabelFromMap(l.id));
     window.mapState.markers = [];
@@ -275,7 +271,7 @@ window.mapAPI = {
   },
 };
 
-// ── Boot ──────────────────────────────────────────────────────────────────────
+// włącz
 document.addEventListener('DOMContentLoaded', async () => {
   initMap();
   await loadMapData();
